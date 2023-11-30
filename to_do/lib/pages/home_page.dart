@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
             task.done
                 ? Icons.check_box_outlined
                 : Icons.check_box_outline_blank_outlined,
-            color: Colors.red,
+            color: Colors.pink,
           ),
           onTap: () {
             task.done = !task.done;
