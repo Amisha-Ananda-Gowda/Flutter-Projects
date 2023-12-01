@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -7,7 +9,8 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class _HomePageState extends State<HomePage>with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   double _buttonRadius = 100;
 
   final Tween<double> _backgroundScale = Tween<double>(begin: 0.0, end: 1.0);
@@ -17,7 +20,9 @@ class _HomePageState extends State<HomePage>with SingleTickerProviderStateMixin 
   @override
   void initState() {
     super.initState();
-    _starIconAnimationController = AnimationController(vsync: this ,duration: const Duration(seconds: 4));
+    _starIconAnimationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 4));
+    _starIconAnimationController!.repeat();
   }
 
   @override
@@ -29,13 +34,13 @@ class _HomePageState extends State<HomePage>with SingleTickerProviderStateMixin 
         children: [
           _pageBackground(),
           Column(
-            mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment:CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _circularAnimationButton(),
               _starIcon(),
-          ],
+            ],
           )
         ],
       ),
@@ -89,10 +94,21 @@ class _HomePageState extends State<HomePage>with SingleTickerProviderStateMixin 
     );
   }
 
-  Widget _starIcon(){
-    return const Icon(Icons.star,
-    size:100,
-     color:Colors.yellow,
+  Widget _starIcon() {
+    return AnimatedBuilder(
+      animation: _starIconAnimationController!.view,
+      builder: (_buildContext, _child) {
+        return Transform.rotate(
+          angle: _starIconAnimationController!.value * 2 * pi,
+          child: _child,
+        );
+      },
+      child: const Icon(
+        Icons.star,
+        size: 100,
+        color: Colors.yellow,
+        
+      ),
     );
   }
 }
